@@ -1,0 +1,7 @@
+requests
+pandas
+bs4
+nltk
+flask
+vaderSentiment
+lxml

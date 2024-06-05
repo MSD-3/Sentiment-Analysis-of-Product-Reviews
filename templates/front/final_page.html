@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Score</title>
+    <link rel="icon" href="{{ url_for('static', filename='R.png') }}" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_final.css') }}">
+</head>
+
+<body>
+    <div class="navbar">
+        <h2>Amazon Product Sentiment Analyser</h2>
+    </div>
+    <div class="container">
+        <div class="trustscore">
+            <div class="score-circle">
+                <div class="score">
+                    <p>Sentiment Score</p>
+                    <h1>{{result}} / 100</h1>
+                    <!-- <a href="#">What is this?</a>
+                    <a href="#" class="disclaimer">Disclaimer</a> -->
+                </div>
+            </div>
+        </div>
+        <div class="feedback">
+            <p>What is your feeling about the score ?</p>
+            <div class="emotions">
+                <div class="emotion"><span class="emoji">&#128544;</span>
+                    <p>0</p>
+                </div>
+                <div class="emotion"><span class="emoji">&#128543;</span>
+                    <p>0</p>
+                </div>
+                <div class="emotion"><span class="emoji">&#128528;</span>
+                    <p>0</p>
+                </div>
+                <div class="emotion"><span class="emoji">&#128515;</span>
+                    <p>0</p>
+                </div>
+                <div class="emotion"><span class="emoji">&#11088;</span>
+                    <p>0</p>
+                </div>
+            </div>
+            <p><a href="#">No reviews. Be the first to Review.</a></p>
+            <a href="#" class="report-scam">Report Scam</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Assume the score is provided in a variable named result
+            var result = {{ result }};
+            var scoreCircle = document.querySelector('.score-circle');
+    
+            if (result > 75) {
+                scoreCircle.classList.add('green');
+            } else if (result >= 50 && result <= 74) {
+                scoreCircle.classList.add('yellow');
+            } else if (result >= 25 && result <= 49) {
+                scoreCircle.classList.add('orange');
+            } else if (result >= 0 && result <= 24) {
+                scoreCircle.classList.add('red');
+            }
+        });
+    </script>
+</body>
+
+</html>

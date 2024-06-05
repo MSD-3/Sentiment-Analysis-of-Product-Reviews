@@ -1,0 +1,125 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+
+.navbar {
+    background: #141E30;
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #243B55, #141E30);
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #243B55, #141E30);
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+}
+
+.container {
+    /* display: flex;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden; */
+    text-align: center;
+    margin: 50px auto;
+    width: 50%;
+    padding: 20px;
+    border: 2px solid rgb(203, 237, 243);
+    border-radius: 25px;
+    background: #141E30; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #243B55, #141E30); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #fff; /* Changed text color to white for better readability */
+}
+
+.trustscore,
+.feedback {
+    padding: 20px;
+}
+
+.score-circle {
+    color: #fff;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+}
+
+.score-circle.green {
+    background-color: #28a745; /* Green */
+}
+
+.score-circle.yellow {
+    background-color: #d6a000; /* Yellow */
+    /*color: #000; *//* Change text color to black for better readability */
+}
+
+.score-circle.orange {
+    background-color: #fd7e14; /* Orange */
+}
+
+.score-circle.red {
+    background-color: #dc3545; /* Red */
+}
+
+.score {
+    text-align: center;
+}
+
+.score p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.score h1 {
+    margin: 10px 0;
+    color: #28a745;
+}
+
+.score a {
+    display: block;
+    color: red;
+    text-decoration: none;
+}
+
+.score a.disclaimer {
+    color: black;
+    text-decoration: underline;
+}
+
+.feedback p {
+    margin: 0 0 10px 0;
+}
+
+.feedback a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.feedback .emotions {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.feedback .emotion {
+    text-align: center;
+}
+
+.feedback .emoji {
+    font-size: 2em;
+}
+
+.report-scam {
+    color: red;
+    text-decoration: none;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Score</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_final.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="trustscore">
+            <div class="score-circle">
+                <div class="score">
+                    <p>SentimentScore</p>
+                    <h1>{{result}} / 100</h1>
+                    <a href="#">What is this?</a>
+                    <a href="#" class="disclaimer">Disclaimer</a>
+                </div>
+            </div>
+        </div>
+        <div class="feedback">
+            <p>What is your feeling about <a href="#">www.if-not-true-then-false.com/2021/debil[..]?</a></p>
+            <div class="emotions">
+                <div class="emotion"><span class="emoji">&#128544;</span>
+                    <p>0</p>
+                </div>
+                <div class="emotion"><span class="emoji">&#128528;</span>
+                    <p>0</p>
+                </div>
+                <div class="emotion"><span class="emoji">&#128528;</span>
+                    <p>0</p>
+                </div>
+                <div class="emotion"><span class="emoji">&#128515;</span>
+                    <p>0</p>
+                </div>
+                <div class="emotion"><span class="emoji">&#11088;&#11088;</span>
+                    <p>0</p>
+                </div>
+            </div>
+            <p><a href="#">No reviews. Be the first to Review.</a></p>
+            <a href="#" class="report-scam">Report Scam</a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Product Sentiment Analyser</title>
+    <link rel="icon" href="{{ url_for('static', filename='R.png') }}" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="navbar">
+        <h2>Amazon Product Sentiment Analyser</h2>
+    </div>
+    <div class="price-history-container">
+        <h1>Amazon Product Sentiment Analyser</h1>
+        <form method="post" onsubmit="showPreloader()">
+            <input type="text" id="product-name" name="product-name" placeholder="Enter product link">
+            <button id="search-button">Search</button>
+        </form>
+        <div id="preloader">
+            <svg class="pl" viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                        <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                        <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                    </linearGradient>
+                    <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                        <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                    </linearGradient>
+                </defs>
+                <circle class="pl__ring" cx="100" cy="100" r="82" fill="none" stroke="url(#pl-grad1)"
+                    stroke-width="36" stroke-dasharray="0 257 1 257" stroke-dashoffset="0.01"
+                    stroke-linecap="round" transform="rotate(-90,100,100)" />
+                <line class="pl__ball" stroke="url(#pl-grad2)" x1="100" y1="18" x2="100.01" y2="182"
+                    stroke-width="36" stroke-dasharray="1 165" stroke-linecap="round" />
+            </svg>
+        </div>
+    </div>
+    <script>
+        function showPreloader() {
+            event.preventDefault(); // Prevent the form from submitting
+            document.getElementById('search-button').style.display = 'none';
+            document.getElementById('preloader').style.display = 'block';
+
+            // Simulate a delay for the preloader (e.g., fetching data)
+            setTimeout(function () {
+                document.querySelector('form').submit(); // Submit the form after the delay
+            }, 2000); // Change the delay as needed
+        }
+    </script>
+</body>
+
+</html>
