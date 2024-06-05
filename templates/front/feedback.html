@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Received</title>
+    <link rel="icon" href="{{ url_for('static', filename='R.png') }}" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_final.css') }}">
+</head>
+
+<body>
+    <div class="navbar">
+        <h2>Amazon Product Sentiment Analyser</h2>
+    </div>
+    <div class="container">
+        <div class="feedback-message">
+            <h1>Thank You for Your Feedback</h1><br>
+            <p>We appreciate your time and effort in providing your feedback. It helps us improve our services.</p><br>
+            <a href="{{url_for('index') }}" class="return-home">Return to Home</a>
+        </div>
+    </div>
+</body>
+
+</html>

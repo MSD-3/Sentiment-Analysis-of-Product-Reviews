@@ -12,45 +12,44 @@
 <body>
     <div class="navbar">
         <h2>Amazon Product Sentiment Analyser</h2>
+        <a href="{{url_for('index') }}" class="home-button">
+            <span class="home-icon">&#8962;</span> Home
+        </a>
     </div>
     <div class="container">
         <div class="trustscore">
             <div class="score-circle">
                 <div class="score">
                     <p>Sentiment Score</p>
-                    <h1>{{result}} / 100</h1>
-                    <!-- <a href="#">What is this?</a>
-                    <a href="#" class="disclaimer">Disclaimer</a> -->
+                    <h1 id="sentiment-score"></h1>
                 </div>
             </div>
         </div>
         <div class="feedback">
-            <p>What is your feeling about the score ?</p>
+            <p>What is your feeling about the score?</p>
             <div class="emotions">
-                <div class="emotion"><span class="emoji">&#128544;</span>
-                    <p>0</p>
+                <div class="emotion" data-value="1"><span class="emoji">&#128544;</span>
                 </div>
-                <div class="emotion"><span class="emoji">&#128543;</span>
-                    <p>0</p>
+                <div class="emotion" data-value="2"><span class="emoji">&#128543;</span>
                 </div>
-                <div class="emotion"><span class="emoji">&#128528;</span>
-                    <p>0</p>
+                <div class="emotion" data-value="3"><span class="emoji">&#128528;</span>
                 </div>
-                <div class="emotion"><span class="emoji">&#128515;</span>
-                    <p>0</p>
+                <div class="emotion" data-value="4"><span class="emoji">&#128515;</span>
                 </div>
-                <div class="emotion"><span class="emoji">&#11088;</span>
-                    <p>0</p>
+                <div class="emotion" data-value="5"><span class="emoji">&#11088;</span>
                 </div>
             </div>
-            <p><a href="#">No reviews. Be the first to Review.</a></p>
-            <a href="#" class="report-scam">Report Scam</a>
+            <button id="submit-button" style="display: none;">Submit</button>
         </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Assume the score is provided in a variable named result
-            var result = {{ result }};
+            // Set the sentiment score (replace with actual score from your backend)
+            var result = {{result}}; // Example score, replace with actual data
+
+            // Update the sentiment score text
+            document.getElementById('sentiment-score').textContent = result + ' / 100';
+    
             var scoreCircle = document.querySelector('.score-circle');
     
             if (result > 75) {
@@ -62,6 +61,23 @@
             } else if (result >= 0 && result <= 24) {
                 scoreCircle.classList.add('red');
             }
+    
+            var emotions = document.querySelectorAll('.emotion');
+            var submitButton = document.getElementById('submit-button');
+    
+            emotions.forEach(function(emotion) {
+                emotion.addEventListener('click', function() {
+                    emotions.forEach(function(em) {
+                        em.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    submitButton.style.display = 'block';
+                });
+            });
+
+            submitButton.addEventListener('click', function() {
+                window.location.href = "{{url_for('feedback') }}";
+            });
         });
     </script>
 </body>

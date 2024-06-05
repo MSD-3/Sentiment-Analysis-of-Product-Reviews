@@ -18,6 +18,9 @@ app = Flask(__name__)
 def index():
     return render_template('front/main.html')
 
+@app.route('/feedback')
+def feedback():
+    return render_template('front/feedback.html')
 
 @app.route('/', methods=['POST'])
 def submit():

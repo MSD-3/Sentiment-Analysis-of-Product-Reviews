@@ -8,14 +8,36 @@ body {
 
 .navbar {
     background: #141E30;
-        /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #243B55, #141E30);
-        /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #243B55, #141E30);
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: -webkit-linear-gradient(to right, #243B55, #141E30);
+    background: linear-gradient(to right, #243B55, #141E30);
     padding: 15px;
     text-align: center;
     color: #fff;
+    position: relative;
+    -webkit-box-shadow: 0 8px 6px -6px #999;
+    -moz-box-shadow: 0 8px 6px -6px #999;
+    box-shadow: 0 8px 6px -6px #999;
+}
+
+.home-button {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.home-icon {
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+.home-button:hover {
+    text-decoration: underline;
 }
 
 .container {
@@ -25,11 +47,11 @@ body {
     padding: 20px;
     border: 2px solid rgb(203, 237, 243);
     border-radius: 25px;
-    background: #141E30; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #243B55, #141E30); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #141E30;
+    background: -webkit-linear-gradient(to right, #243B55, #141E30);
+    background: linear-gradient(to right, #243B55, #141E30);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    color: #fff; /* Changed text color to white for better readability */
+    color: #fff;
 }
 
 .trustscore,
@@ -47,6 +69,7 @@ body {
     align-items: center;
     margin: auto;
 }
+
 .score-circle.green {
     background-color: #28a745; /* Green */
 }
@@ -106,13 +129,60 @@ body {
 
 .feedback .emotion {
     text-align: center;
+    cursor: pointer;
 }
 
 .feedback .emoji {
     font-size: 2em;
 }
 
+.feedback .emotion.selected {
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    padding: 5px;
+}
+
 .report-scam {
     color: red;
+    text-decoration: none;
+}
+
+#submit-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#submit-button:hover {
+    background-color: #0056b3;
+}
+
+.feedback-message {
+    padding: 20px;
+}
+
+.feedback-message h1 {
+    margin: 10px 0;
+    color: #ffffff;
+}
+
+.feedback-message p {
+    margin: 10px 0;
+}
+
+.return-home {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
     text-decoration: none;
 }
