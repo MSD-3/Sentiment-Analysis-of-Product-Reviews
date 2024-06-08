@@ -4,3 +4,6 @@
 /venv
 #ignore temp directories
 __pycache__
+
+temp.py 
+*.xlsx

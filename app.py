@@ -25,7 +25,16 @@ def feedback():
 @app.route('/', methods=['POST'])
 def submit():
     reviews_url = request.form['product-name']
+    #formatting reviews_url
+    #Split the URL at '/'
+    parts = reviews_url.split("/")
 
+    # Replace 'dp' with 'product-reviews' in the fourth element (assuming 'dp' is the fourth element)
+    parts[4] = "product-reviews"
+
+    # Join the parts back together with '/' discarding refid of the url
+    reviews_url = "/".join(parts[:6])
+    
     # Header to set the requests as a browser requests
     headers = {
         'authority': 'www.amazon.com',
