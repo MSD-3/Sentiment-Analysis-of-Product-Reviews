@@ -60,7 +60,7 @@ body {
 }
 
 .score-circle {
-    background-color: #e6ffe6;
+    background-color: rgb(85, 101, 132);
     border-radius: 50%;
     width: 200px;
     height: 200px;
@@ -68,6 +68,22 @@ body {
     justify-content: center;
     align-items: center;
     margin: auto;
+    position: relative;
+    cursor: pointer;
+}
+
+.add-score-circle {
+    background-color: rgb(85, 101, 132);
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    font-size: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    position: relative;
+    cursor: pointer;
 }
 
 .score-circle.green {
@@ -101,15 +117,26 @@ body {
     color: #000000;
 }
 
-.score a {
-    display: block;
-    color: red;
-    text-decoration: none;
+#toggle-scores-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.score a.disclaimer {
-    color: black;
-    text-decoration: underline;
+#toggle-scores-button:hover {
+    background-color: #0056b3;
+}
+
+.additional-scores {
+    display: none;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
 }
 
 .feedback p {
@@ -142,47 +169,18 @@ body {
     padding: 5px;
 }
 
-.report-scam {
-    color: red;
-    text-decoration: none;
-}
 
 #submit-button {
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
-    text-align: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 #submit-button:hover {
     background-color: #0056b3;
-}
-
-.feedback-message {
-    padding: 20px;
-}
-
-.feedback-message h1 {
-    margin: 10px 0;
-    color: #ffffff;
-}
-
-.feedback-message p {
-    margin: 10px 0;
-}
-
-.return-home {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
 }

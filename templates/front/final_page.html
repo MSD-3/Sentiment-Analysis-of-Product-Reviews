@@ -18,40 +18,65 @@
     </div>
     <div class="container">
         <div class="trustscore">
-            <div class="score-circle">
+            <div class="score-circle" id="score-circle">
                 <div class="score">
                     <p>Sentiment Score</p>
                     <h1 id="sentiment-score"></h1>
+                </div>
+            </div>
+            <button id="toggle-scores-button">Show Detailed Scores</button>
+            <div class="additional-scores" id="additional-scores">
+                <div class="add-score-circle">
+                    <div class="score">
+                        <p>Positive</p>
+                        <h1 id="positive-score"></h1>
+                    </div>
+                </div>
+                <div class="add-score-circle">
+                    <div class="score">
+                        <p>Negative</p>
+                        <h1 id="negative-score"></h1>
+                    </div>
+                </div>
+                <div class="add-score-circle">
+                    <div class="score">
+                        <p>Neutral</p>
+                        <h1 id="neutral-score"></h1>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="feedback">
             <p>What is your feeling about the score?</p>
             <div class="emotions">
-                <div class="emotion" data-value="1"><span class="emoji">&#128544;</span>
-                </div>
-                <div class="emotion" data-value="2"><span class="emoji">&#128543;</span>
-                </div>
-                <div class="emotion" data-value="3"><span class="emoji">&#128528;</span>
-                </div>
-                <div class="emotion" data-value="4"><span class="emoji">&#128515;</span>
-                </div>
-                <div class="emotion" data-value="5"><span class="emoji">&#11088;</span>
-                </div>
+                <div class="emotion" data-value="1"><span class="emoji">&#128544;</span></div>
+                <div class="emotion" data-value="2"><span class="emoji">&#128543;</span></div>
+                <div class="emotion" data-value="3"><span class="emoji">&#128528;</span></div>
+                <div class="emotion" data-value="4"><span class="emoji">&#128515;</span></div>
+                <div class="emotion" data-value="5"><span class="emoji">&#11088;</span></div>
             </div>
             <button id="submit-button" style="display: none;">Submit</button>
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set the sentiment score (replace with actual score from your backend)
-            var result = {{result}}; // Example score, replace with actual data
+        document.addEventListener('DOMContentLoaded', function () {
+            var result = {{result}};
+            var pos = {{pos}};
+            var neg = {{neg}};
+            var neu = {{neu}};
 
             // Update the sentiment score text
             document.getElementById('sentiment-score').textContent = result + ' / 100';
-    
-            var scoreCircle = document.querySelector('.score-circle');
-    
+            document.getElementById('positive-score').textContent = pos + '%';
+            document.getElementById('negative-score').textContent = neg + '%';
+            document.getElementById('neutral-score').textContent = neu + '%';
+
+            var scoreCircle = document.querySelector('#score-circle');
+            var additionalScores = document.getElementById('additional-scores');
+            additionalScores.style.display = "none";  // Hide initially
+
+            var toggleButton = document.getElementById('toggle-scores-button');
+
             if (result > 75) {
                 scoreCircle.classList.add('green');
             } else if (result >= 50 && result <= 74) {
@@ -61,13 +86,23 @@
             } else if (result >= 0 && result <= 24) {
                 scoreCircle.classList.add('red');
             }
-    
+
+            toggleButton.addEventListener('click', function () {
+                if (additionalScores.style.display === "none" || additionalScores.style.display === "") {
+                    additionalScores.style.display = "flex";
+                    toggleButton.textContent = "Hide Detailed Scores";
+                } else {
+                    additionalScores.style.display = "none";
+                    toggleButton.textContent = "Show Detailed Scores";
+                }
+            });
+
             var emotions = document.querySelectorAll('.emotion');
             var submitButton = document.getElementById('submit-button');
-    
-            emotions.forEach(function(emotion) {
-                emotion.addEventListener('click', function() {
-                    emotions.forEach(function(em) {
+
+            emotions.forEach(function (emotion) {
+                emotion.addEventListener('click', function () {
+                    emotions.forEach(function (em) {
                         em.classList.remove('selected');
                     });
                     this.classList.add('selected');
@@ -75,7 +110,7 @@
                 });
             });
 
-            submitButton.addEventListener('click', function() {
+            submitButton.addEventListener('click', function () {
                 window.location.href = "{{url_for('feedback') }}";
             });
         });

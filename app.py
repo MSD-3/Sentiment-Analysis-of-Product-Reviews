@@ -199,4 +199,4 @@ def submit():
         print("Negative : ", neg)
         print("Neutral : ", neu)
         print("Compound", compound)
-    return render_template('front/final_page.html', result=compound)
+    return render_template('front/final_page.html', result=compound , pos=pos , neg=neg, neu=neu)
