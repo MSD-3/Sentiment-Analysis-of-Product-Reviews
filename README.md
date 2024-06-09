@@ -1,5 +1,6 @@
 # Sentiment-Analysis-of-Product-Reviews
-An end-to-end project that accepts an Amazon product link and generates a score based on the product reviews.
+An end-to-end project that accepts an Amazon product link and generates a score based on the product reviews.<br/><br/>
+
 ![Screenshot (7)](https://github.com/MSD-3/Sentiment-Analysis-of-Product-Reviews/assets/49367816/d4bdb533-62cf-405c-a955-f8129b265a2e)
 
 ![Screenshot (10)](https://github.com/MSD-3/Sentiment-Analysis-of-Product-Reviews/assets/49367816/575938d1-4410-4b75-bd0b-ff9dce0b2eea)
