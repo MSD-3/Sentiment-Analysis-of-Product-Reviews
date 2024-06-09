@@ -11,6 +11,7 @@ from nltk.corpus import stopwords
 import csv
 import math
 import os
+import chardet
 
 app = Flask(__name__)
 
@@ -72,7 +73,7 @@ def submit():
 
     print(totalPg)
 
-    for i in range(12):     #change back to totalPg using 12 for testing
+    for i in range(10):     #change back to totalPg using 12 for testing
         print(f"Running for page {i+1}")
         try:
             pageUrl = reviewUrl + f"ref=cm_cr_getr_d_paging_btm_next_{i+1}?pageNumber={i+1}"
@@ -93,7 +94,11 @@ def submit():
     neg = 0
     neu = 0
     count = 0
-    with open('reviews.csv', 'r',encoding='utf-8') as csv_file:
+    with open('reviews.csv', 'rb') as rawdata:
+        result = chardet.detect(rawdata.read(100000))
+        encoding = result['encoding']
+    print(f"Detected encoding: {encoding}")
+    with open('reviews.csv', 'r',encoding=encoding) as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
