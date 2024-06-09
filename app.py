@@ -10,6 +10,7 @@ import re
 from nltk.corpus import stopwords
 import csv
 import math
+import os
 
 app = Flask(__name__)
 
@@ -24,18 +25,14 @@ def feedback():
 
 @app.route('/', methods=['POST'])
 def submit():
-    reviews_url = request.form['product-name']
-    #formatting reviews_url
-    #Split the URL at '/'
-    parts = reviews_url.split("/")
-
-    # Replace 'dp' with 'product-reviews' in the fourth element (assuming 'dp' is the fourth element)
-    parts[4] = "product-reviews"
-
+    productUrl = request.form['product-name']
+    # productUrl = "https://www.amazon.in/Daikin-Inverter-Copper-Filter-MTKM50U/dp/B09R4RYCJ4/ref=sr_1_3?_encoding=UTF8&content-id=amzn1.sym.58c90a12-100b-4a2f-8e15-7c06f1abe2be&dib=eyJ2IjoiMSJ9.LpujZ4uISPUK8sa_6yNGVRpIsC1NZyG20gIuO5aq54qul5ElUvKErFRUzRIoTOUX8mgWV8jIT67WbuR57cU0yUk78UfZ8uIDCYg860J0RX4s0ZN0Tz0x8YRjP_WHDMQoEhr3AnODQ8HpCODpRtthKR7gWrsoKC9ZXljp3LWdLIuELmslvhZA3TJl4b0R1Rk-TT_v6-YWX0I-zdmAhZfjivKMOb4OKe9uz7R3SPxmJxZjFWD2CHgH72KY6AnYXeVHT9qtNWyBplLDBAvIiiNaAdHmB3OrXkVsR7sloJae47A.8QiH1KB8P3uC-AKgd-C6_CAhq7O0UA22KD4uCB_DUfI&dib_tag=se&pd_rd_r=068403fd-9e24-4c2f-9ea1-c30d10ad7535&pd_rd_w=oVdPH&pd_rd_wg=XpbkZ&pf_rd_p=58c90a12-100b-4a2f-8e15-7c06f1abe2be&pf_rd_r=A59X0411PW99V7MSY26J&qid=1717912477&refinements=p_85%3A10440599031&rps=1&s=kitchen&sr=1-3&th=1"
+    parts = productUrl.split("/")
     # Join the parts back together with '/' discarding refid of the url
-    reviews_url = "/".join(parts[:6])
-    
-    # Header to set the requests as a browser requests
+    productUrl = "/".join(parts[:6])
+    productUrl= productUrl+"/"
+    # print(productUrl)
+    reviewlist = []
     headers = {
         'authority': 'www.amazon.com',
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -43,128 +40,49 @@ def submit():
         'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'
     }
+    def extractReviews(reviewUrl, pageNumber):
+        resp = requests.get(reviewUrl, headers=headers)
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        reviews = soup.findAll('div', {'data-hook': "review"})
 
-    # URL of The amazon Review page
+        # Ensure the outputs directory exists
+        if not os.path.exists('outputs'):
+            os.makedirs('outputs')
 
-    # Define Page No
-    len_page = 12
-
-    # <font color="red">Functions</font>
-
-    # Extra Data as Html object from amazon Review page
-
-    def reviewsHtml(url, len_page):
-
-        # Empty List define to store all pages html data
-        soups = []
-
-        # Loop for gather all 3000 reviews from 300 pages via range
-        for page_no in range(1, len_page + 1):
-
-            # parameter set as page no to the requests body
-            params = {
-                'ie': 'UTF8',
-                'reviewerType': 'all_reviews',
-                'filterByStar': 'critical',
-                'pageNumber': page_no,
+        for item in reviews:
+            with open(f'outputs/file_{pageNumber}.html', 'w', encoding='utf-8') as f:
+                f.write(str(item))
+            
+            review = {
+                'Review Title': item.find('a', {'data-hook': "review-title"}).text.strip(),
+                'Rating': item.find('i', {'data-hook': 'review-star-rating'}).text.strip(),
+                'Review Body': item.find('span', {'data-hook': 'review-body'}).text.strip(),
             }
+            reviewlist.append(review)
 
-            # Request make for each page
-            response = requests.get(url, headers=headers)
+    def totalPages(productUrl):
+        resp = requests.get(productUrl, headers=headers)
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        reviews = soup.find('div', {'data-hook': "cr-filter-info-review-rating-count"})
+        return int(reviews.text.strip().split(', ')[1].split(" ")[0])
 
-            # Save Html object by using BeautifulSoup4 and lxml parser
-            soup = BeautifulSoup(response.text, 'lxml')
 
-            # Add single Html page data in master soups list
-            soups.append(soup)
+    reviewUrl = productUrl.replace("dp", "product-reviews")
+    totalPg = totalPages(reviewUrl)
 
-        return soups
+    print(totalPg)
 
-    # Grab Reviews name, description, date, stars, title from HTML
+    for i in range(12):     #change back to totalPg using 12 for testing
+        print(f"Running for page {i+1}")
+        try:
+            pageUrl = reviewUrl + f"ref=cm_cr_getr_d_paging_btm_next_{i+1}?pageNumber={i+1}"
+            extractReviews(pageUrl, i+1)
+        except Exception as e:
+            print(e)
 
-    def getReviews(html_data):
-
-        # Create Empty list to Hold all data
-        data_dicts = []
-
-        # Select all Reviews BOX html using css selector
-        boxes = html_data.select('div[data-hook="review"]')
-
-        # Iterate all Reviews BOX
-        for box in boxes:
-
-            # Select Name using css selector and cleaning text using strip()
-            # If Value is empty define value with 'N/A' for all.
-            try:
-                name = box.select_one('[class="a-profile-name"]').text.strip()
-            except Exception as e:
-                name = 'N/A'
-
-            try:
-                stars = box.select_one(
-                    '[data-hook="review-star-rating"]').text.strip().split(' out')[0]
-            except Exception as e:
-                stars = 'N/A'
-
-            try:
-                title = box.select_one(
-                    '[data-hook="review-title"]').text.strip()
-            except Exception as e:
-                title = 'N/A'
-
-            try:
-                # Convert date str to dd/mm/yyy format
-                datetime_str = box.select_one(
-                    '[data-hook="review-date"]').text.strip().split(' on ')[-1]
-                date = datetime.strptime(
-                    datetime_str, '%B %d, %Y').strftime("%d/%m/%Y")
-            except Exception as e:
-                date = 'N/A'
-
-            try:
-                description = box.select_one(
-                    '[data-hook="review-body"]').text.strip()
-            except Exception as e:
-                description = 'N/A'
-
-            # create Dictionary with al review data
-            data_dict = {
-                'Name': name,
-                'Stars': stars,
-                'Title': title,
-                'Date': date,
-                'Description': description
-            }
-
-            # Add Dictionary in master empty List
-            data_dicts.append(data_dict)
-
-        return data_dicts
-
-    # <font color="red">Data Process</font>
-
-    # Grab all HTML
-    html_datas = reviewsHtml(reviews_url, len_page)
-
-    # Empty List to Hold all reviews data
-    reviews = []
-
-    # Iterate all Html page
-    for html_data in html_datas:
-
-        # Grab review data
-        review = getReviews(html_data)
-
-        # add review data in reviews empty list
-        reviews += review
-
-    # Create a dataframe with reviews Data
-    df_reviews = pd.DataFrame(reviews)
-
-    print(df_reviews)
-
-    # Save data
-    df_reviews.to_csv('reviews.csv', index=False)
+    print("Scraping over")
+    df = pd.DataFrame(reviewlist)
+    df.to_csv('reviews.csv', index = False)
 
     nltk.download('stopwords')
 
@@ -175,12 +93,12 @@ def submit():
     neg = 0
     neu = 0
     count = 0
-    with open('reviews.csv', 'r') as csv_file:
+    with open('reviews.csv', 'r',encoding='utf-8') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
             # convert to lowercase
-            text1 = line[4].lower()
+            text1 = line[2].lower()
 
             text_final = ''.join(c for c in text1 if not c.isdigit())
 
